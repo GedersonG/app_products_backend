@@ -16,6 +16,7 @@ public class NewUser {
     private String username;
 
     @Email
+    @NotBlank
     private String email;
 
     @NotBlank

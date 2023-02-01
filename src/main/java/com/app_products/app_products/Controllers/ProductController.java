@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,6 +51,7 @@ public class ProductController {
         return new ResponseEntity(product, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping()
     public ResponseEntity<?> save(@RequestBody ProductModel product){
         ProductDTO productDTO = new ProductDTO(product.getName(), product.getPrice());
@@ -60,6 +63,7 @@ public class ProductController {
         return new ResponseEntity(new Message("Producto creado con éxito."), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody ProductModel product){
         if(!productService.existsById(id))
@@ -72,6 +76,7 @@ public class ProductController {
         productService.update(id, product);
         return new ResponseEntity(new Message("Producto actualizado con éxito."), HttpStatus.OK);
     }
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id){

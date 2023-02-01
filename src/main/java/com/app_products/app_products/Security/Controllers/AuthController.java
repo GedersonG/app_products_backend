@@ -56,9 +56,9 @@ public class AuthController {
             return new ResponseEntity(new Message("The email " + newUser.getEmail() + " it is already in use."), HttpStatus.BAD_REQUEST);
         User user = new User(newUser.getName(), newUser.getUsername(), newUser.getEmail(), passwordEncoder.encode(newUser.getPassword()));
         Set<Rol> role = new HashSet<>();
-        role.add(rolService.getByRolName(RolName.ROL_USER).get());
+        role.add(rolService.getByRolName(RolName.ROLE_USER).get());
         if(newUser.getRole().contains("admin"))
-            role.add(rolService.getByRolName(RolName.ROL_ADMIN).get());
+            role.add(rolService.getByRolName(RolName.ROLE_ADMIN).get());
         user.setRole(role);
         userService.save(user);
         return new ResponseEntity(new Message("You have successfully registered"), HttpStatus.CREATED);
