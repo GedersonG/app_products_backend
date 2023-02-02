@@ -78,6 +78,7 @@ public class ProductController {
     }
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id){
         if(!productService.existsById(id))
